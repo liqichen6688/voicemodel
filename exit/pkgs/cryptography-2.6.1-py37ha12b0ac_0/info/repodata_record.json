@@ -1,0 +1,26 @@
+{
+  "build": "py37ha12b0ac_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "asn1crypto >=0.21.0",
+    "cffi >=1.7",
+    "idna >=2.1",
+    "openssl >=1.1.1b,<1.1.2a",
+    "python >=3.7,<3.8.0a0",
+    "six >=1.4.1"
+  ],
+  "features": "",
+  "fn": "cryptography-2.6.1-py37ha12b0ac_0.tar.bz2",
+  "license": "Apache 2.0 or BSD 3-Clause, PSF 2",
+  "license_family": "BSD",
+  "md5": "88e8b088f5e998c47f44d21223d35b6f",
+  "name": "cryptography",
+  "size": 596878,
+  "subdir": "osx-64",
+  "timestamp": 1552320040844,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/cryptography-2.6.1-py37ha12b0ac_0.tar.bz2",
+  "version": "2.6.1"
+}

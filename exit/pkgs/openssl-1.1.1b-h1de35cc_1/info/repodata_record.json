@@ -1,0 +1,21 @@
+{
+  "build": "h1de35cc_1",
+  "build_number": 1,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "ca-certificates"
+  ],
+  "features": "",
+  "fn": "openssl-1.1.1b-h1de35cc_1.tar.bz2",
+  "license": "OpenSSL",
+  "license_family": "Apache",
+  "md5": "d27d9a4d5cac7f6f646cb62fd4a3e7c5",
+  "name": "openssl",
+  "size": 3617446,
+  "subdir": "osx-64",
+  "timestamp": 1551973883075,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/openssl-1.1.1b-h1de35cc_1.tar.bz2",
+  "version": "1.1.1b"
+}

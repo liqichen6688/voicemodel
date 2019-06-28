@@ -1,0 +1,20 @@
+{
+  "build": "h1de35cc_5",
+  "build_number": 5,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "ncurses >=6.1,<7.0a0"
+  ],
+  "features": "",
+  "fn": "readline-7.0-h1de35cc_5.tar.bz2",
+  "license": "GPL-3.0",
+  "md5": "e7e32610dc0b61aa5947789844175bbf",
+  "name": "readline",
+  "size": 402747,
+  "subdir": "osx-64",
+  "timestamp": 1535476075762,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/readline-7.0-h1de35cc_5.tar.bz2",
+  "version": "7.0"
+}

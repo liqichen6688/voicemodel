@@ -1,0 +1,20 @@
+{
+  "build": "py37h1de35cc_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.7,<3.8.0a0"
+  ],
+  "features": "",
+  "fn": "pycosat-0.6.3-py37h1de35cc_0.tar.bz2",
+  "license": "MIT",
+  "md5": "f57ecdeef06cb7dbe274891fde71279e",
+  "name": "pycosat",
+  "size": 109490,
+  "subdir": "osx-64",
+  "timestamp": 1530795370956,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/pycosat-0.6.3-py37h1de35cc_0.tar.bz2",
+  "version": "0.6.3"
+}

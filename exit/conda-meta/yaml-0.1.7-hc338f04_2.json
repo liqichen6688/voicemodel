@@ -1,0 +1,31 @@
+{
+  "build": "hc338f04_2",
+  "build_number": 2,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [],
+  "features": "",
+  "files": [
+    "include/yaml.h",
+    "lib/libyaml-0.2.dylib",
+    "lib/libyaml.a",
+    "lib/libyaml.dylib",
+    "lib/libyaml.la",
+    "lib/pkgconfig/yaml-0.1.pc"
+  ],
+  "fn": "yaml-0.1.7-hc338f04_2.tar.bz2",
+  "installed_by": "Miniconda3-4.6.14-MacOSX-x86_64.sh",
+  "license": "MIT",
+  "link": {
+    "source": "/Users/xander/Documents/StudyDocument/Lab/VoiceFinancial/VoiceModel/exit/pkgs/yaml-0.1.7-hc338f04_2",
+    "type": "hard-link"
+  },
+  "md5": "dab654341f57e56b615a678800262b0e",
+  "name": "yaml",
+  "size": 82035,
+  "subdir": "osx-64",
+  "timestamp": 1510610700770,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/yaml-0.1.7-hc338f04_2.tar.bz2",
+  "version": "0.1.7"
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/shennong" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/shennong/pykaldi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/shennong/pykaldi/tools/clif" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/shennong/pykaldi/tools/protobuf" vcs="Git" />
+  </component>
+</project>

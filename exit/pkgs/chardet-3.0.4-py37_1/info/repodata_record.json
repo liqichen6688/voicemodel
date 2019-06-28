@@ -1,0 +1,21 @@
+{
+  "build": "py37_1",
+  "build_number": 1,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.7,<3.8.0a0"
+  ],
+  "features": "",
+  "fn": "chardet-3.0.4-py37_1.tar.bz2",
+  "license": "LGPL2",
+  "license_family": "GPL",
+  "md5": "5ea5d76c006b51927e757c692239c4fd",
+  "name": "chardet",
+  "size": 168164,
+  "subdir": "osx-64",
+  "timestamp": 1530723268949,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/chardet-3.0.4-py37_1.tar.bz2",
+  "version": "3.0.4"
+}

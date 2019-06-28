@@ -1,0 +1,19 @@
+{
+  "build": "hcfea43d_1",
+  "build_number": 1,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [],
+  "features": "",
+  "fn": "libcxxabi-4.0.1-hcfea43d_1.tar.bz2",
+  "license": "MIT license or UIUC License",
+  "license_family": "Other",
+  "md5": "b06555a43b9c0857b87b342115bea761",
+  "name": "libcxxabi",
+  "size": 468900,
+  "subdir": "osx-64",
+  "timestamp": 1540686629315,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/libcxxabi-4.0.1-hcfea43d_1.tar.bz2",
+  "version": "4.0.1"
+}

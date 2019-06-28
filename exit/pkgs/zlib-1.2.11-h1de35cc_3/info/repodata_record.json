@@ -1,0 +1,19 @@
+{
+  "build": "h1de35cc_3",
+  "build_number": 3,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [],
+  "features": "",
+  "fn": "zlib-1.2.11-h1de35cc_3.tar.bz2",
+  "license": "zlib",
+  "license_family": "Other",
+  "md5": "6fddebfbe8354dd5fdb5ac8d56dec5bf",
+  "name": "zlib",
+  "size": 107053,
+  "subdir": "osx-64",
+  "timestamp": 1542815100324,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/zlib-1.2.11-h1de35cc_3.tar.bz2",
+  "version": "1.2.11"
+}

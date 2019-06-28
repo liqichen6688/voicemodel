@@ -1,0 +1,37 @@
+==> 2019-04-17 16:35:01 <==
+# cmd: build.py --product miniconda --python 3.7 --installer-type pkg sh --output-dir /opt/concourse/worker/volumes/live/7fc3bac8-1c3b-4aeb-7171-7a0225014447/volume/output-installer/190417
++defaults::ca-certificates-2019.1.23-0
++defaults::libcxx-4.0.1-hcfea43d_1
++defaults::libcxxabi-4.0.1-hcfea43d_1
++defaults::libedit-3.1.20181209-hb402a30_0
++defaults::libffi-3.2.1-h475c297_4
++defaults::ncurses-6.1-h0a44026_1
++defaults::openssl-1.1.1b-h1de35cc_1
++defaults::python-3.7.3-h359304d_0
++defaults::readline-7.0-h1de35cc_5
++defaults::sqlite-3.27.2-ha441bb4_0
++defaults::tk-8.6.8-ha441bb4_0
++defaults::yaml-0.1.7-hc338f04_2
++defaults::zlib-1.2.11-h1de35cc_3
++defaults::xz-5.2.4-h1de35cc_4
++defaults::asn1crypto-0.24.0-py37_0
++defaults::certifi-2019.3.9-py37_0
++defaults::chardet-3.0.4-py37_1
++defaults::idna-2.8-py37_0
++defaults::pycosat-0.6.3-py37h1de35cc_0
++defaults::pycparser-2.19-py37_0
++defaults::pysocks-1.6.8-py37_0
++defaults::python.app-2-py37_9
++defaults::ruamel_yaml-0.15.46-py37h1de35cc_0
++defaults::six-1.12.0-py37_0
++defaults::cffi-1.12.2-py37hb5b8e2f_1
++defaults::setuptools-41.0.0-py37_0
++defaults::cryptography-2.6.1-py37ha12b0ac_0
++defaults::wheel-0.33.1-py37_0
++defaults::pip-19.0.3-py37_0
++defaults::pyopenssl-19.0.0-py37_0
++defaults::urllib3-1.24.1-py37_0
++defaults::requests-2.21.0-py37_0
++defaults::conda-4.6.14-py37_0
+# update specs: ['conda', 'python=3.7']
+

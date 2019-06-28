@@ -1,0 +1,20 @@
+{
+  "build": "py37_9",
+  "build_number": 9,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.7,<3.8.0a0"
+  ],
+  "features": "",
+  "fn": "python.app-2-py37_9.tar.bz2",
+  "license": "BSD",
+  "md5": "bd62aa063f069b74dc2cb11eda00fc7e",
+  "name": "python.app",
+  "size": 1403540,
+  "subdir": "osx-64",
+  "timestamp": 1538032544653,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/python.app-2-py37_9.tar.bz2",
+  "version": "2"
+}

@@ -1,0 +1,20 @@
+{
+  "build": "h0a44026_1",
+  "build_number": 1,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "libcxx >=4.0.1"
+  ],
+  "features": "",
+  "fn": "ncurses-6.1-h0a44026_1.tar.bz2",
+  "license": "Free software (MIT-like)",
+  "md5": "6b2728131239deb2ffa0236adb131fe0",
+  "name": "ncurses",
+  "size": 908582,
+  "subdir": "osx-64",
+  "timestamp": 1543442263055,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/ncurses-6.1-h0a44026_1.tar.bz2",
+  "version": "6.1"
+}

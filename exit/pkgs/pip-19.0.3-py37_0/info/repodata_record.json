@@ -1,0 +1,23 @@
+{
+  "build": "py37_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.7,<3.8.0a0",
+    "setuptools",
+    "wheel"
+  ],
+  "features": "",
+  "fn": "pip-19.0.3-py37_0.tar.bz2",
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "40fb54958ba1f16050e1aa30e02b9e89",
+  "name": "pip",
+  "size": 1877559,
+  "subdir": "osx-64",
+  "timestamp": 1551143767658,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/pip-19.0.3-py37_0.tar.bz2",
+  "version": "19.0.3"
+}

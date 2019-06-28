@@ -1,0 +1,21 @@
+{
+  "build": "hb402a30_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "ncurses >=6.1,<7.0a0"
+  ],
+  "features": "",
+  "fn": "libedit-3.1.20181209-hb402a30_0.tar.bz2",
+  "license": "NetBSD",
+  "license_family": "BSD",
+  "md5": "cd44371a880fac87ea047c33f8000d4e",
+  "name": "libedit",
+  "size": 162411,
+  "subdir": "osx-64",
+  "timestamp": 1547971396177,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/libedit-3.1.20181209-hb402a30_0.tar.bz2",
+  "version": "3.1.20181209"
+}

@@ -1,0 +1,18 @@
+{
+  "build": "0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [],
+  "features": "",
+  "fn": "ca-certificates-2019.1.23-0.tar.bz2",
+  "license": "ISC",
+  "md5": "327641c00102c9890209f54dabfba6b5",
+  "name": "ca-certificates",
+  "size": 129064,
+  "subdir": "osx-64",
+  "timestamp": 1549470013523,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/ca-certificates-2019.1.23-0.tar.bz2",
+  "version": "2019.1.23"
+}

@@ -1,0 +1,18 @@
+{
+  "build": "h1de35cc_4",
+  "build_number": 4,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [],
+  "features": "",
+  "fn": "xz-5.2.4-h1de35cc_4.tar.bz2",
+  "license": "LGPL-2.1 and GPL-2.0",
+  "md5": "8b2f68c15aee680cead7680e6208e984",
+  "name": "xz",
+  "size": 275767,
+  "subdir": "osx-64",
+  "timestamp": 1526498492181,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/xz-5.2.4-h1de35cc_4.tar.bz2",
+  "version": "5.2.4"
+}

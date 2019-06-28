@@ -1,0 +1,20 @@
+{
+  "build": "py37_0",
+  "build_number": 0,
+  "channel": "https://repo.anaconda.com/pkgs/main/osx-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.7,<3.8.0a0"
+  ],
+  "features": "",
+  "fn": "asn1crypto-0.24.0-py37_0.tar.bz2",
+  "license": "MIT",
+  "md5": "ff3b91bb94d406dc498f99fd8f1d24a8",
+  "name": "asn1crypto",
+  "size": 158380,
+  "subdir": "osx-64",
+  "timestamp": 1530697558851,
+  "track_features": "",
+  "url": "https://repo.anaconda.com/pkgs/main/osx-64/asn1crypto-0.24.0-py37_0.tar.bz2",
+  "version": "0.24.0"
+}
