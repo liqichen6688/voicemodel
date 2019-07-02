@@ -15,14 +15,14 @@ def han():
     # refer to 4.2 in the paper whil reading the following code
     #window_size = 5
     market_input = Input(shape=(5, 6), dtype='float32' )
-    market_out = Dense(90, activation='tanh')(market_input)
+    market_out = Dense(90, activation='relu')(market_input)
     market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_out)
 
     # Input for one day : max article per day =40, dim_vec=200
     input1 = Input(shape=(3, 90), dtype='float32')
 
     # Attention Layer
-    dense_layer = Dense(90, activation='tanh')(input1)
+    dense_layer = Dense(90, activation='relu')(input1)
     softmax_layer = Activation('softmax')(dense_layer)
     attention_mul = multiply([softmax_layer,input1])
     #end attention layer
@@ -49,9 +49,10 @@ def han():
     post_gru = TimeDistributed(pre_model2)(l_gru)
 
 # MLP to perform classification
-    dense1 = Dense(90, activation='tanh')(post_gru)
-    dense2 = Dense(3, activation='tanh')(dense1)
-    final = Activation('softmax')(dense2)
+    dense1 = Dense(90, activation='relu')(post_gru)
+    dense2 = Dense(90, activation='relu')(dense1)
+    dense3 = Dense(3, activation='relu')(dense2)
+    final = Activation('softmax')(dense3)
     final_model = Model(inputs=[input2, market_input], outputs=[final])
     final_model.summary()
 
@@ -156,10 +157,10 @@ def training(x_feature_name,x_market_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_feature_name)
-    for i in range(10):
-        train = model.train_on_batch([x_feature, x_market], y_train_end)
-        print(model.metrics_names[0] , ':' , train[0])
-        print(model.metrics_names[1] , ':' , train[1])
+    for i in range(1000):
+            train = model.train_on_batch([x_feature, x_market], y_train_end)
+            print(model.metrics_names[0] , ':' , train[0])
+            print(model.metrics_names[1] , ':' , train[1])
 
 
 
@@ -219,7 +220,7 @@ if __name__ == "__main__":
     x_market_test_folder = 'data_backup/feed_data/x_market_test'
     x_feature_test_folder = 'data_backup/feed_data/x_feature_test'
     y_test_folder = 'data_backup/feed_data/y_test'
-    epochs=500
+    epochs=300
 	
     duo_list= twin_creation(x_feature_train_folder, x_market_train_folder,y_train_folder)
     for epoch in range(epochs):
