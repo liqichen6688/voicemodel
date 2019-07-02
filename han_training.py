@@ -136,9 +136,9 @@ def twin_creation(x_feature_folder, x_market_folder, y_train_folder) :
     return duo_list
 
 def training(x_feature_name,x_market_name,y_name,model):
-    x_feature = np.load('data_backup/feed_data/x_feature_train/'+x_feature_name)
-    y_train = np.load('data_backup/feed_data/y_train/'+y_name)
-    x_market = np.load('data_backup/feed_data/x_market_train/'+x_market_name)
+    x_feature = np.load('./data_backup/feed_data/x_feature_train/'+x_feature_name)
+    y_train = np.load('./data_backup/feed_data/y_train/'+y_name)
+    x_market = np.load('./data_backup/feed_data/x_market_train/'+x_market_name)
 
 
     y_oh_list=[] # y one hot for one hot encoding
@@ -157,7 +157,7 @@ def training(x_feature_name,x_market_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_feature_name)
-    for i in range(1000):
+    for i in range(10):
             train = model.train_on_batch([x_feature, x_market], y_train_end)
             print(model.metrics_names[0] , ':' , train[0])
             print(model.metrics_names[1] , ':' , train[1])
@@ -186,9 +186,9 @@ def testing(x_feature_test_folder, x_market_test_folder, y_test_folder,model):
     num_sample = 0
     num_right_sample = 0
     for duo in duo_test_list:
-        x_feature_test = np.load('data_backup/feed_data/x_feature_test/'+duo[0])
-        x_market_test = np.load('data_backup/feed_data/x_market_test/'+duo[1])
-        y_test = np.load('data_backup/feed_data/y_test/'+duo[2])
+        x_feature_test = np.load('./data_backup/feed_data/x_feature_test/'+duo[0])
+        x_market_test = np.load('./data_backup/feed_data/x_market_test/'+duo[1])
+        y_test = np.load('./data_backup/feed_data/y_test/'+duo[2])
         num_sample += x_feature_test.shape[0]
         y_test_list = []
         for trend in y_test:
@@ -213,13 +213,13 @@ if __name__ == "__main__":
     optimizer = keras.optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
-    x_feature_train_folder='data_backup/feed_data/x_feature_train'
-    y_train_folder='data_backup/feed_data/y_train'
-    x_market_train_folder = 'data_backup/feed_data/x_market_train'
+    x_feature_train_folder='./data_backup/feed_data/x_feature_train'
+    y_train_folder='./data_backup/feed_data/y_train'
+    x_market_train_folder = './data_backup/feed_data/x_market_train'
 
-    x_market_test_folder = 'data_backup/feed_data/x_market_test'
-    x_feature_test_folder = 'data_backup/feed_data/x_feature_test'
-    y_test_folder = 'data_backup/feed_data/y_test'
+    x_market_test_folder = './data_backup/feed_data/x_market_test'
+    x_feature_test_folder = './data_backup/feed_data/x_feature_test'
+    y_test_folder = './data_backup/feed_data/y_test'
     epochs=300
 	
     duo_list= twin_creation(x_feature_train_folder, x_market_train_folder,y_train_folder)
