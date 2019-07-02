@@ -1,15 +1,25 @@
+'''newmongo'''
 import numpy as np
 import pandas as pd
 import pymongo
 import re
 import datetime
 from collections import defaultdict
-import zhongzheng800
+#import zhongzheng800
+import baostock as bs
 import os
 import xlrd
-
+lg = bs.login()
+rs = bs.query_zz500_stocks()
+zz500_stocks = []
+while (rs.error_code == '0') & rs.next():
+    # 获取一条记录，将记录合并在一起
+    zz500_stocks.append(rs.get_row_data())
+a = list(pd.DataFrame(zz500_stocks)[1])
+symbol_list =  [ _[3:] for _ in a]
+bs.logout()
 # symbol_list = zhongzheng800.symbol_list
-symbol_list = None
+#symbol_list = None
 
 # default_config = {
 #     'user'   : 'xtech',
@@ -19,21 +29,21 @@ symbol_list = None
 #     'db'     : 'admin',
 #     }
 
-# default_config = {
-#     'user': 'xtech_read',
-#     'passwd': 'factor_z0t0p0',
-#     'host': '175.25.50.121',
-#     'port': '32788',
-#     'db': 'factor_ztp',
-# }
+#default_config = {
+#    'user': 'xtech_read',
+#    'passwd': 'factor_z0t0p0',
+#    'host': '175.25.50.121',
+#    'port': '32788',
+#    'db': 'factor_ztp',
+#}
 
 my_config = {
-    'user': 'xtech_guest',
-    'passwd': 'Xtech123',
-    'host': '175.25.50.119',
-    'port': '27017',
-    'db': 'L1_STOCK_MIN',
-}
+     'user': 'xtech_guest',
+     'passwd': 'Xtech123',
+     'host': '175.25.50.119',
+     'port': '27017',
+     'db': 'L1_STOCK_MIN',
+ }
 
 
 class BTMongo(object):
@@ -64,9 +74,9 @@ class BTMongo(object):
         self.collist = self._db.collection_names()
         return self.collist
 
-    def get_data(self, name):
+    def get_data(self, name, symbol):
         collection = self._db.get_collection(name)
-        document = collection.find()
+        document = collection.find({"StockCode" : symbol})
         fac_df = pd.DataFrame(list(document))
         if fac_df.empty:
             print(name + "=[]");
@@ -94,70 +104,72 @@ class BTMongo(object):
 #     data=data_loader.get_data(table_names[0])
 #     print(data)
 
-def get_feature(data_loader, feature_name):
+def get_feature(data_loader, feature_name, symbol):
     # ret_data=pd.DataFrame(columns=['date']+symbol_list)
-    ret_data = pd.DataFrame()
-    tmp_data = data_loader.get_data(feature_name)
+#    ret_data = pd.DataFrame()
+    tmp_data = data_loader.get_data(feature_name, symbol)
     if tmp_data.empty: return tmp_data
     if tmp_data.shape[0] == 1: return tmp_data
     # print(tmp_data)
-    print(tmp_data.name[0], tmp_data.formula[0])
-    st = 0;
-    ed = len(tmp_data)
-    form = tmp_data['formula']
-    useless = []
-    for i in range(len(form)):
-        if isinstance(form[i], str) == True:
-            useless.append(i)
-
-    tmp_data = tmp_data.drop(tmp_data.index[useless])
-    tmp_data.drop_duplicates('date', 'first', inplace=True)
-    tmp_data.set_index('date')
-    # for i in range(len(form)):
-    # 	if st==0 and isinstance(form[i],str)==False: st=i
-    # 	if st!=0 and isinstance(form[i],str): ed=i
-    # print(st,ed)
-    # print(tmp_data)
-    # # tmp_data=tmp_data.iloc[st:ed]
-    # ret_data.date=tmp_data.index.shiftime("%Y%m%d")
-    ret_data['date'] = [int(s.replace('-', '')) for s in tmp_data['date']]
-    tp = 1
-    if '000001' in tmp_data.columns:
-        tp = 0
-
-    if symbol_list is None:
-        for st in tmp_data.keys():
-            if st[:6].isdigit():
-                # ret_data[st]=tmp_data['%06d'%st]
-                ret_data[st] = np.array(tmp_data[st])
-    else:
-        for st in symbol_list:
-            if tp == 0:
-                # ret_data[st]=tmp_data['%06d'%st]
-                ret_data[st] = np.array(tmp_data['%06d' % st])
-            else:
-                # ret_data[st]=tmp_data['%d'%st]
-                ret_data[st] = np.array(tmp_data['%d' % st])
-    return ret_data
+#    print(tmp_data.name[0], tmp_data.formula[0])
+#    st = 0;
+#    ed = len(tmp_data)
+#    form = tmp_data['formula']
+#    useless = []
+#    for i in range(len(form)):
+#        if isinstance(form[i], str) == True:
+#            useless.append(i)
+#
+#    tmp_data = tmp_data.drop(tmp_data.index[useless])
+#    tmp_data.drop_duplicates('date', 'first', inplace=True)
+#    tmp_data.set_index('date')
+#    # for i in range(len(form)):
+#    # 	if st==0 and isinstance(form[i],str)==False: st=i
+#    # 	if st!=0 and isinstance(form[i],str): ed=i
+#    # print(st,ed)
+#    # print(tmp_data)
+#    # # tmp_data=tmp_data.iloc[st:ed]
+#    # ret_data.date=tmp_data.index.shiftime("%Y%m%d")
+#    ret_data['date'] = [int(s.replace('-', '')) for s in tmp_data['date']]
+#    tp = 1
+#    if '000001' in tmp_data.columns:
+#        tp = 0
+#
+#    if symbol_list is None:
+#        for st in tmp_data.keys():
+#            if st[:6].isdigit():
+#                # ret_data[st]=tmp_data['%06d'%st]
+#                ret_data[st] = np.array(tmp_data[st])
+#    else:
+#        for st in symbol_list:
+#            if tp == 0:
+#                # ret_data[st]=tmp_data['%06d'%st]
+#                ret_data[st] = np.array(tmp_data['%06d' % st])
+#            else:
+#                # ret_data[st]=tmp_data['%d'%st]
+#                ret_data[st] = np.array(tmp_data['%d' % st])
+    return tmp_data
 
 
 def save_feature(data, path):
-    # if not os.path.exists(path):
-    # 	os.makedirs(path)
-    data.to_csv(path, index=False)
+#    if not os.path.exists(path):
+#     	os.makedirs(path)
+    if not os.path.exists(path):
+        data.to_csv(path, index=False)
 
 
 def get_features(data_loader, feature_names):
     for x in feature_names:
-        st_data = get_feature(data_loader, x)
-        if st_data.empty or st_data.shape[0] == 1: print("none ++++++++++++++++++++++++");continue
-        train_data=st_data[(st_data.date>=20150901) & (st_data.date<=20180831)]
-        print(train_data.date)
-        # test_data = st_data[(st_data.date >= 20150901)]
-        # train_path='./MongoFeatures_Train/'+x+'.csv'
-        test_path = './MongoFeatures_train/' + x + '.csv'
-        # save_feature(train_data,train_path)
-        save_feature(train_data, test_path)
+        for z in symbol_list:
+            st_data = get_feature(data_loader, x, z)
+            if st_data.empty or st_data.shape[0] == 1: print("none ++++++++++++++++++++++++");continue
+    #        train_data=st_data[(st_data.date>=20150901) & (st_data.date<=20180831)]
+    #        print(train_data.date)
+            # test_data = st_data[(st_data.date >= 20150901)]
+            # train_path='./MongoFeatures_Train/'+x+'.csv'
+            test_path = './data_backup/1minbar_new/' + z +"_" + x  + '.csv'
+            # save_feature(train_data,train_path)
+            save_feature(st_data, test_path)
 
 
 def get_list():
@@ -173,13 +185,19 @@ if __name__ == '__main__':
     #     x = f_list.row_values(i)[0];
     #     y = f_list.row_values(i)[1]
     #     print(x, y)
-    x = 'factor_ztp'
-    y_list = ['BackwardADJ', 'EMA5', 'Market_Value', 'RSI5']
+    x = 'L1_STOCK_MIN'
+    data_loader = BTMongo(config=my_config, name=x)
+    y_list = [ _ for _ in data_loader.collist if _[-2:] == "M1"]
+    y_list.sort()
     for y in y_list:
         # if x!='jinyifei': continue
-        data_loader = BTMongo(config=default_config, name=x)
-        table_names = data_loader.get_collections()
-        get_features(data_loader, [y])
+        if True:
+            table_names = data_loader.get_collections()
+            get_features(data_loader, [y])
+            print("OVER " + str(y))
+#        except:
+#            print("ERROR!")
+#            continue
 '''
 
 import fetchMongo
