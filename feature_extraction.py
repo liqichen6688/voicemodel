@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from python_speech_features import mfcc
 import librosa
+from scipy.stats import rankdata
 
 data_path = 'data_backup/1minbar_new'
 frame_length = 40
@@ -61,6 +62,16 @@ def get_feature(all_data, past_day_num=10, fre=16000):
             new_feature = get_all_feature(close_price, volume)
             new_feature = new_feature[np.newaxis,:]
             feature = np.append(feature, new_feature, axis=0)
+
+        price_feature = feature[:,0,:]
+        volume_feature =  feature[:,1,:]
+        lenth = price_feature.shape[0]
+        for i in range(price_feature.shape[1]):
+            price_feature[:,i] = rankdata(price_feature[:,i], method='ordinal')/lenth
+            volume_feature[:,i] = rankdata(volume_feature[:,i], method='ordinal')/lenth
+
+        feature[:,0,:] = price_feature
+        feature[:,1,:] = volume_feature
 
         recur_feature = feature[np.newaxis, 0:past_day_num, :]
         for i in range(1, num_days-past_day_num):
@@ -204,8 +215,8 @@ def get_market_feature(all_data: pd.DataFrame, past_day_num =10):
         company_spr = (all_close_price[0].max() - all_close_price[0].min())/close_price[0]
         r2 = (all_return[0] * all_return[0]).sum() / all_return[0].shape[0]
         r2_down = (all_return[0][all_return[0]>0] ** 2).sum() / all_return[0].shape[0]
-        s = company_returns/(r2)**(1/2)
-        s_down = company_returns/(r2_down)**(1/2)
+        s = max(min(company_returns/(r2)**(1/2),10),-10)
+        s_down = max(min(company_returns/(r2_down)**(1/2),10),-10)
         market_feature = np.array([company_returns, company_spr, r2, r2_down, s, s_down])
         market_feature = market_feature[np.newaxis, :]
 

@@ -157,7 +157,7 @@ def training(x_feature_name,x_market_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_feature_name)
-    batch_size = 60
+    batch_size = 5
     data_length = y_train_end.shape[0]
     for i in range(100):
             index = np.random.randint(data_length-batch_size)
@@ -225,7 +225,7 @@ def testing(x_feature_test_folder, x_market_test_folder, y_test_folder,model):
 
 if __name__ == "__main__":
     model = han()
-    opt = keras.optimizers.Adagrad(lr=0.001, epsilon=None, decay=0.0, clipnorm=1.)
+    opt = keras.optimizers.Adagrad(lr=0.0005, epsilon=None, decay=0.0, clipnorm=1.)
     model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_feature_train_folder='./data_backup/feed_data/x_feature_train'
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     x_market_test_folder = './data_backup/feed_data/x_market_test'
     x_feature_test_folder = './data_backup/feed_data/x_feature_test'
     y_test_folder = './data_backup/feed_data/y_test'
-    epochs=300
+    epochs=60
 	
     duo_list= twin_creation(x_feature_train_folder, x_market_train_folder,y_train_folder)
     for epoch in range(epochs):
