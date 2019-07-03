@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e73e0fca-09c3-45ec-b038-286e687742d7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/han_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/han_training.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/feature_extraction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="211" selection-start-line="203" selection-start-column="8" selection-end-line="211" />
+            <state relative-caret-position="412">
+              <caret line="246" lean-forward="true" selection-start-line="246" selection-end-line="246" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -46,11 +43,11 @@
           <provider selected="true" editor-type-id="LargeFileEditor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/han_training.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="237" column="13" selection-start-line="237" selection-start-column="13" selection-end-line="237" selection-end-column="13" />
+            <state relative-caret-position="157">
+              <caret line="234" column="39" selection-start-line="234" selection-start-column="39" selection-end-line="234" selection-end-column="39" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -94,8 +91,8 @@
         <option value="$PROJECT_DIR$/rasta.py" />
         <option value="$PROJECT_DIR$/MongoFeatures.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/feature_extraction.py" />
         <option value="$PROJECT_DIR$/han_training.py" />
+        <option value="$PROJECT_DIR$/feature_extraction.py" />
       </list>
     </option>
   </component>
@@ -127,13 +124,6 @@
               <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
               <item name="data_backup" type="462c0819:PsiDirectoryNode" />
               <item name="feed_data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="VoiceModel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
-              <item name="data_backup" type="462c0819:PsiDirectoryNode" />
-              <item name="feed_data" type="462c0819:PsiDirectoryNode" />
-              <item name="x_market_test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -306,7 +296,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77301000" />
+    <option name="totallyTimeSpent" value="77908000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -320,7 +310,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23015873" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23015873" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -333,15 +323,15 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4993895" weight="0.32959184" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.34798536" side_tool="true" visible="true" weight="0.3642857" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4969475" weight="0.45306122" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.6520147" visible="true" weight="0.3642857" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50427353" side_tool="true" visible="true" weight="0.45306122" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4957265" visible="true" weight="0.45306122" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.65140414" weight="0.3642857" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" sideWeight="0.4927769" visible="true" weight="0.16239317" />
+      <window_info anchor="right" id="SciView" order="3" sideWeight="0.49253732" visible="true" weight="0.16239317" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" x="0" y="0" width="370" height="850" id="Documentation" order="5" sideWeight="0.5072231" side_tool="true" visible="true" weight="0.16239317" />
+      <window_info anchor="right" x="0" y="0" width="370" height="850" id="Documentation" order="5" sideWeight="0.5074627" side_tool="true" visible="true" weight="0.16239317" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22283272" />
@@ -560,22 +550,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feature_extraction.py">
+    <entry file="file://$PROJECT_DIR$/han_training.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="211" selection-start-line="203" selection-start-column="8" selection-end-line="211" />
+        <state relative-caret-position="157">
+          <caret line="234" column="39" selection-start-line="234" selection-start-column="39" selection-end-line="234" selection-end-column="39" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/han_training.py">
+    <entry file="file://$PROJECT_DIR$/feature_extraction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="237" column="13" selection-start-line="237" selection-start-column="13" selection-end-line="237" selection-end-column="13" />
+        <state relative-caret-position="412">
+          <caret line="246" lean-forward="true" selection-start-line="246" selection-end-line="246" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

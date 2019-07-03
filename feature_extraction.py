@@ -226,21 +226,20 @@ def get_market_feature(all_data: pd.DataFrame, past_day_num =10):
         market_feature = np.array([company_returns, company_spr, r2, r2_down, s, s_down])
         market_feature = market_feature[np.newaxis, :]
 
-
         for i in range(1, num_days):
             company_returns= (close_price[i]-close_price[i-1])/close_price[i-1]
             company_spr = (all_close_price[i].max() - all_close_price[i].min())/close_price[i]
             r2 = (all_return[i] * all_return[i]).sum() / all_return[i].shape[0]
             r2_down = (all_return[i][all_return[i] > 0] ** 2).sum() / all_return[i].shape[0]
-        if r2 != 0:
-            s = company_returns/(r2)**(1/2)
-        else:
-            s = np.sign(company_returns)*10
-        if r2_down != 0:
-            s_down = company_returns/(r2_down)**(1/2)
-        else:
-            s_down = np.sign(company_returns)*10
-            
+            if r2 != 0:
+                s = company_returns/(r2)**(1/2)
+            else:
+                s = np.sign(company_returns)*10
+            if r2_down != 0:
+                s_down = company_returns/(r2_down)**(1/2)
+            else:
+                s_down = np.sign(company_returns)*10
+
             new_feature = np.array([company_returns, company_spr, r2, r2_down, s, s_down])
             new_feature = new_feature[np.newaxis, :]
             market_feature = np.append(market_feature, new_feature, axis=0)
