@@ -10,12 +10,12 @@ import baostock as bs
 import os
 import xlrd
 lg = bs.login()
-rs = bs.query_zz500_stocks()
-zz500_stocks = []
+rs = bs.query_sz50_stocks()
+sz50_stocks = []
 while (rs.error_code == '0') & rs.next():
     # 获取一条记录，将记录合并在一起
-    zz500_stocks.append(rs.get_row_data())
-a = list(pd.DataFrame(zz500_stocks)[1])
+    sz50_stocks.append(rs.get_row_data())
+a = list(pd.DataFrame(sz50_stocks)[1])
 symbol_list =  [ _[3:] for _ in a]
 bs.logout()
 # symbol_list = zhongzheng800.symbol_list
@@ -187,7 +187,7 @@ if __name__ == '__main__':
     #     print(x, y)
     x = 'L1_STOCK_MIN'
     data_loader = BTMongo(config=my_config, name=x)
-    y_list = [ _ for _ in data_loader.collist if _[-2:] == "M1"]
+    y_list = [ _ for _ in data_loader.collist if _[-2:] == "M1" and _[:4] in ['2018','2019']]
     y_list.sort()
     for y in y_list:
         # if x!='jinyifei': continue

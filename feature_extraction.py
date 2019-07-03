@@ -4,7 +4,7 @@ import numpy as np
 from python_speech_features import mfcc
 import librosa
 
-data_path = 'data_backup/1minbar'
+data_path = 'data_backup/1minbar_new'
 frame_length = 40
 store_path = 'data_backup/feed_data'
 
@@ -34,15 +34,13 @@ def get_dataframe() -> dict:
                 if name not in data_dict.keys():
                     data_dict[name] = []
                 new_data = pd.read_csv(data_path + '/' + file_name)
-                new_data = new_data.drop('Unnamed: 0', axis=1)
-                new_data = new_data.drop('symbol', axis=1)
                 if not new_data.empty:
                     data_dict[name].append(new_data)
     print('done')
 
     return data_dict
 
-def get_feature(all_data, past_day_num=5, fre=16000):
+def get_feature(all_data, past_day_num=10, fre=16000):
     company_list = get_company_name()
     for company_name in company_list:
         folder = os.path.exists(store_path + '/' + 'x_train')
@@ -50,16 +48,16 @@ def get_feature(all_data, past_day_num=5, fre=16000):
 
 
 
-        close_price = all_data[company_name][0].iloc[:,-2].values
-        volume = all_data[company_name][0].iloc[:,-1].values.astype(np.float)
+        close_price = all_data[company_name][0][['ClosePrice']].to_numpy()[:,0]
+        volume = all_data[company_name][0][['BargainAmount']].to_numpy()[:,0].astype(np.float)
 
         feature = get_all_feature(close_price, volume)
 
         feature = feature[np.newaxis, :]
         num_days = len(all_data[company_name])
         for i in range(1, num_days):
-            close_price = all_data[company_name][0].iloc[:,-2].values
-            volume = all_data[company_name][0].iloc[:,-1].values.astype(np.float)
+            close_price = all_data[company_name][i][['ClosePrice']].to_numpy()[:,0]
+            volume = all_data[company_name][i][['BargainAmount']].to_numpy()[:,0].astype(np.float)
             new_feature = get_all_feature(close_price, volume)
             new_feature = new_feature[np.newaxis,:]
             feature = np.append(feature, new_feature, axis=0)
@@ -74,7 +72,7 @@ def get_feature(all_data, past_day_num=5, fre=16000):
                 recur_feature[int(0.8 * num_days):])
         get_prediction(all_data, past_day_num)
 
-def get_prediction(all_data, past_day_num=5):
+def get_prediction(all_data, past_day_num=10):
     company_list = get_company_name()
     company_returns = {}
     all_return = []
@@ -83,7 +81,7 @@ def get_prediction(all_data, past_day_num=5):
         num_days = len(all_data[company_name])
         close_price = []
         for i in range(num_days):
-            close_price.append(all_data[company_name][i].iloc[-1, -2])
+            close_price.append(all_data[company_name][i][['ClosePrice']].to_numpy()[-1][0])
 
         company_returns[company_name] = [0]
         for i in range(1, num_days):
@@ -92,6 +90,7 @@ def get_prediction(all_data, past_day_num=5):
 
     low_thres = np.percentile(all_return, 33.33)
     high_thres = np.percentile(all_return, 66.66)
+    print(len(all_return), all_return)
     for company_name in company_list:
         num_days = len(company_returns[company_name])
         for i in range(num_days):
@@ -183,7 +182,7 @@ def get_all_feature(close_price: np.ndarray, volume:np.ndarray):
 
     return feature
 
-def get_market_feature(all_data: pd.DataFrame, past_day_num =5):
+def get_market_feature(all_data: pd.DataFrame, past_day_num =10):
     company_list = get_company_name()
     for company_name in company_list:
 
@@ -192,10 +191,10 @@ def get_market_feature(all_data: pd.DataFrame, past_day_num =5):
         all_close_price = []
         all_return = []
         for i in range(num_days):
-            close_price.append(all_data[company_name][i].iloc[-1, -2])
-            close = all_data[company_name][i].iloc[:, -2].values
-            high = all_data[company_name][i].iloc[:, -4].values
-            low = all_data[company_name][i].iloc[:, -3].values
+            close_price.append(all_data[company_name][i][['ClosePrice']].to_numpy()[-1][0])
+            close = all_data[company_name][i][['ClosePrice']].to_numpy()[:,0]
+            high = all_data[company_name][i][['HighPrice']].to_numpy()[:,0]
+            low = all_data[company_name][i][['LowPrice']].to_numpy()[:,0]
             all_return.append((high-low)/close)
             all_close_price.append(close)
 

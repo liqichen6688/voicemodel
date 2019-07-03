@@ -14,7 +14,7 @@ from keras.utils.np_utils import to_categorical
 def han():
     # refer to 4.2 in the paper whil reading the following code
     #window_size = 5
-    market_input = Input(shape=(5, 6), dtype='float32' )
+    market_input = Input(shape=(10, 6), dtype='float32' )
     market_out = Dense(90, activation='relu')(market_input)
     market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_out)
 
@@ -34,7 +34,7 @@ def han():
 
     # Input of the HAN shape (None,11,40,200)
     # 5 = Window size = N in the paper 40 = max articles per day, dim_vec = 200
-    input2 = Input(shape=(5, 2, 90), dtype='float32')
+    input2 = Input(shape=(10, 2, 90), dtype='float32')
 
     # TimeDistributed is used to apply a layer to every temporal slice of an input
     # So we use it here to apply our attention layer ( pre_model ) to every article in one day
@@ -49,8 +49,8 @@ def han():
     post_gru = TimeDistributed(pre_model2)(l_gru)
 
 # MLP to perform classification
-    dense1 = Dense(90, activation='relu')(post_gru)
-    dense2 = Dense(90, activation='relu')(dense1)
+    dense1 = Dense(100, activation='relu')(post_gru)
+    dense2 = Dense(100, activation='relu')(dense1)
     dense3 = Dense(3, activation='relu')(dense2)
     final = Activation('softmax')(dense3)
     final_model = Model(inputs=[input2, market_input], outputs=[final])
@@ -157,8 +157,21 @@ def training(x_feature_name,x_market_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_feature_name)
-    for i in range(10):
-            train = model.train_on_batch([x_feature, x_market], y_train_end)
+    batch_size = 60
+    data_length = y_train_end.shape[0]
+    for i in range(100):
+            index = np.random.randint(data_length-batch_size)
+            x1 = x_feature[index:index+batch_size,:]
+            #x1 = x1/np.linalg.norm(x1, axis=2)[:,:,np.newaxis]
+            
+            x2 = x_market[index:index+batch_size,:]
+            while(False in np.isfinite(x1) or False in np.isfinite(x2)):
+                index = np.random.randint(data_length-batch_size)
+                x1 = x_feature[index:index+batch_size,:]
+                x2 = x_market[index:index+batch_size,:]
+#x2 = x2/np.linalg.norm(x2, axis=2)[:,:,np.newaxis]
+            #print(x2)
+            train = model.train_on_batch([x1, x2], y_train_end[index:index+batch_size,:])
             print(model.metrics_names[0] , ':' , train[0])
             print(model.metrics_names[1] , ':' , train[1])
 
@@ -198,7 +211,9 @@ def testing(x_feature_test_folder, x_market_test_folder, y_test_folder,model):
             y_test_list.append(code)
         y_test_end = np.asarray(y_test_list)
         print('-------test--------')
-        test = model.test_on_batch([x_feature_test, x_market_test], y_test_end)
+        x1 = x_feature_test
+        x2 = x_market_test
+        test = model.test_on_batch([x1, x2], y_test_end)
         print(model.metrics_names[0], ':', test[0])
         print(model.metrics_names[1], ':', test[1])
         num_right_sample += test[1] * x_feature_test.shape[0]
@@ -210,8 +225,8 @@ def testing(x_feature_test_folder, x_market_test_folder, y_test_folder,model):
 
 if __name__ == "__main__":
     model = han()
-    optimizer = keras.optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
-    model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+    opt = keras.optimizers.Adagrad(lr=0.001, epsilon=None, decay=0.0, clipnorm=1.)
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_feature_train_folder='./data_backup/feed_data/x_feature_train'
     y_train_folder='./data_backup/feed_data/y_train'
@@ -224,9 +239,10 @@ if __name__ == "__main__":
 	
     duo_list= twin_creation(x_feature_train_folder, x_market_train_folder,y_train_folder)
     for epoch in range(epochs):
-        for k,duo in enumerate(duo_list):
-            print('fitting on firm nb {} out of 494 epoch {}'.format(k,epoch))
-            training(duo[0],duo[1], duo[2],model)
+        stock_index = np.random.randint(len(duo_list))
+        print('fitting on firm nb {} out of 494 epoch {}'.format(stock_index,epoch))
+        duo = duo_list[stock_index]
+        training(duo[0],duo[1], duo[2],model)
         epoch += 1
 
     testing(x_feature_test_folder, x_market_test_folder,y_test_folder, model)
