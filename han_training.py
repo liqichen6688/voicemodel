@@ -15,14 +15,15 @@ def han():
     # refer to 4.2 in the paper whil reading the following code
     #window_size = 5
     market_input = Input(shape=(10, 6), dtype='float32' )
-    market_out = Dense(90, activation='relu')(market_input)
-    market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_out)
+    market_1 = Dense(90, activation='tanh')(market_input)
+    market_2 = Activation('softmax')(market_1)
+    market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_2)
 
     # Input for one day : max article per day =40, dim_vec=200
     input1 = Input(shape=(3, 90), dtype='float32')
 
     # Attention Layer
-    dense_layer = Dense(90, activation='relu')(input1)
+    dense_layer = Dense(90, activation='tanh')(input1)
     softmax_layer = Activation('softmax')(dense_layer)
     attention_mul = multiply([softmax_layer,input1])
     #end attention layer
