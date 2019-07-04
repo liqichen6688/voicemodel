@@ -41,7 +41,7 @@ def get_dataframe() -> dict:
 
     return data_dict
 
-def get_feature(all_data, past_day_num=10, fre=16000):
+def get_feature(all_data, past_day_num=20, fre=16000):
     company_list = get_company_name()
     for company_name in company_list:
         folder = os.path.exists(store_path + '/' + 'x_train')
@@ -83,7 +83,7 @@ def get_feature(all_data, past_day_num=10, fre=16000):
                 recur_feature[int(0.8 * num_days):])
         get_prediction(all_data, past_day_num)
 
-def get_prediction(all_data, past_day_num=10):
+def get_prediction(all_data, past_day_num=20):
     company_list = get_company_name()
     company_returns = {}
     all_return = []
@@ -193,7 +193,7 @@ def get_all_feature(close_price: np.ndarray, volume:np.ndarray):
 
     return feature
 
-def get_market_feature(all_data: pd.DataFrame, past_day_num =10):
+def get_market_feature(all_data: pd.DataFrame, past_day_num =20):
     company_list = get_company_name()
     for company_name in company_list:
 
