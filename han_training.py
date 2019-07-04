@@ -14,16 +14,16 @@ from keras.utils.np_utils import to_categorical
 def han():
     # refer to 4.2 in the paper whil reading the following code
     #window_size = 5
-    market_input = Input(shape=(10, 6), dtype='float32' )
-    market_out = Dense(90, activation='relu')(market_input)
+    market_input = Input(shape=(20, 6), dtype='float32' )
+    market_out = Dense(90, activation='sigmoid')(market_input)
     market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_out)
 
     # Input for one day : max article per day =40, dim_vec=200
     input1 = Input(shape=(3, 90), dtype='float32')
 
     # Attention Layer
-    dense_layer = Dense(90, activation='relu')(input1)
-    softmax_layer = Activation('softmax')(dense_layer)
+    dense_layer = Dense(90, activation='sigmoid')(input1)
+    softmax_layer = Activation('sigmoid')(dense_layer)
     attention_mul = multiply([softmax_layer,input1])
     #end attention layer
 
@@ -34,7 +34,7 @@ def han():
 
     # Input of the HAN shape (None,11,40,200)
     # 5 = Window size = N in the paper 40 = max articles per day, dim_vec = 200
-    input2 = Input(shape=(10, 2, 90), dtype='float32')
+    input2 = Input(shape=(20, 2, 90), dtype='float32')
 
     # TimeDistributed is used to apply a layer to every temporal slice of an input
     # So we use it here to apply our attention layer ( pre_model ) to every article in one day
@@ -49,9 +49,9 @@ def han():
     post_gru = TimeDistributed(pre_model2)(l_gru)
 
 # MLP to perform classification
-    dense1 = Dense(100, activation='relu')(post_gru)
-    dense2 = Dense(100, activation='relu')(dense1)
-    dense3 = Dense(3, activation='relu')(dense2)
+    dense1 = Dense(400, activation='sigmoid')(post_gru)
+    dense2 = Dense(400, activation='sigmoid')(dense1)
+    dense3 = Dense(3, activation='sigmoid')(dense2)
     final = Activation('softmax')(dense3)
     final_model = Model(inputs=[input2, market_input], outputs=[final])
     final_model.summary()
@@ -157,7 +157,7 @@ def training(x_feature_name,x_market_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_feature_name)
-    batch_size = 5
+    batch_size = 50
     data_length = y_train_end.shape[0]
     for i in range(100):
             index = np.random.randint(data_length-batch_size)
@@ -225,7 +225,7 @@ def testing(x_feature_test_folder, x_market_test_folder, y_test_folder,model):
 
 if __name__ == "__main__":
     model = han()
-    opt = keras.optimizers.Adagrad(lr=0.0005, epsilon=None, decay=0.0, clipnorm=1.)
+    opt = keras.optimizers.Adagrad(lr=0.0001, epsilon=None, decay=0.04, clipnorm=1.)
     model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_feature_train_folder='./data_backup/feed_data/x_feature_train'
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     x_market_test_folder = './data_backup/feed_data/x_market_test'
     x_feature_test_folder = './data_backup/feed_data/x_feature_test'
     y_test_folder = './data_backup/feed_data/y_test'
-    epochs=60
+    epochs=40
 	
     duo_list= twin_creation(x_feature_train_folder, x_market_train_folder,y_train_folder)
     for epoch in range(epochs):
