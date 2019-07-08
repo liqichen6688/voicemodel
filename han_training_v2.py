@@ -197,7 +197,7 @@ if __name__ == "__main__":
     duo_list= twin_creation(x_train_folder, y_train_folder)
     com_num = len(duo_list)
     for epoch in range(epochs):
-        index = np.random.rand(com_num)
+        index = np.random.randint(com_num)
         duo = duo_list[index]
         print('fitting on firm nb {} out of 494 epoch {}'.format(k,epoch))
         training(duo[0],duo[1],model)
