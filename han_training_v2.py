@@ -150,7 +150,7 @@ def training(x_name,y_name,model):
 
 
 
-def testing(x_test_folder, y_test_foloder,model):
+def testing(x_test_folder, y_test_folder ,model):
     duo_test_list = []
     x_test_list= os.listdir(x_test_folder)
     x_test_list=sorted(x_test_list)
@@ -195,10 +195,12 @@ if __name__ == "__main__":
     epochs=200
 	
     duo_list= twin_creation(x_train_folder, y_train_folder)
+    com_num = len(duo_list)
     for epoch in range(epochs):
-        for k,duo in enumerate(duo_list):
-            print('fitting on firm nb {} out of 494 epoch {}'.format(k,epoch))
-            training(duo[0],duo[1],model)
+        index = np.random.rand(com_num)
+        duo = duo_list[com_num]
+        print('fitting on firm nb {} out of 494 epoch {}'.format(k,epoch))
+        training(duo[0],duo[1],model)
         epoch += 1
 
     testing(x_test_folder, y_test_folder, model)
