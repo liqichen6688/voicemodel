@@ -14,28 +14,22 @@ from keras.utils.np_utils import to_categorical
 def han():
     # refer to 4.2 in the paper whil reading the following code
     #window_size = 5
-<<<<<<< HEAD
     market_input = Input(shape=(20, 6), dtype='float32' )
     market_out = Dense(90, activation='sigmoid')(market_input)
     market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_out)
-=======
     market_input = Input(shape=(10, 6), dtype='float32' )
     market_1 = Dense(90, activation='tanh')(market_input)
     market_2 = Activation('softmax')(market_1)
     market_out1 = Lambda(lambda x: K.expand_dims(x, axis=2))(market_2)
->>>>>>> 2c92bfa22f5a4d68ee79fda55d5b927c0a900a41
 
     # Input for one day : max article per day =40, dim_vec=200
     input1 = Input(shape=(3, 90), dtype='float32')
 
     # Attention Layer
-<<<<<<< HEAD
     dense_layer = Dense(90, activation='sigmoid')(input1)
     softmax_layer = Activation('sigmoid')(dense_layer)
-=======
     dense_layer = Dense(90, activation='tanh')(input1)
     softmax_layer = Activation('softmax')(dense_layer)
->>>>>>> 2c92bfa22f5a4d68ee79fda55d5b927c0a900a41
     attention_mul = multiply([softmax_layer,input1])
     #end attention layer
 

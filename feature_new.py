@@ -92,7 +92,7 @@ def main():
         company_file_list = [_ for _ in file_list if _[0:6] == company]
         company_file_list.sort()
         init = True
-        for item in company_file_list:
+        for item in 1:
             reader = pd.read_csv(data_path+"/" + item)
             if reader.shape[0] != LEN_DATA:
                 continue
