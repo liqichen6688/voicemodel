@@ -9,7 +9,7 @@ import numpy as np
 import librosa
 import os
 
-LEN_DATA = 241
+LEN_DATA = 240
 NUM_FEATURE = 20
 NUM_PERIOD = 3
 NUM_DAYS = 20
@@ -92,7 +92,7 @@ def main():
         company_file_list = [_ for _ in file_list if _[0:6] == company]
         company_file_list.sort()
         init = True
-        for item in 1:
+        for item in company_file_list:
             reader = pd.read_csv(data_path+"/" + item)
             if reader.shape[0] != LEN_DATA:
                 continue
@@ -158,5 +158,5 @@ def process_label():
 
 
 if __name__ == '__main__':
-    main()
+    #main()
     process_label()
