@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e73e0fca-09c3-45ec-b038-286e687742d7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/han_training_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature_new.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_new.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/han_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/han_training.py" afterDir="false" />
-    </list>
+    <list default="true" id="e73e0fca-09c3-45ec-b038-286e687742d7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/feature_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="93" column="19" selection-start-line="93" selection-start-column="19" selection-end-line="93" selection-end-column="19" />
+            <state relative-caret-position="72">
+              <caret line="101" column="17" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -79,7 +74,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/han_training_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2733">
+            <state relative-caret-position="-177">
+              <caret line="187" column="45" selection-start-line="187" selection-start-column="45" selection-end-line="187" selection-end-column="45" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -126,6 +122,7 @@
         <option value="$PROJECT_DIR$/feature_extraction.py" />
         <option value="$PROJECT_DIR$/feature_new.py" />
         <option value="$PROJECT_DIR$/han_training.py" />
+        <option value="$PROJECT_DIR$/han_training_v2.py" />
       </list>
     </option>
   </component>
@@ -156,6 +153,34 @@
               <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
               <item name="data_backup" type="462c0819:PsiDirectoryNode" />
               <item name="feed_data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VoiceModel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
+              <item name="data_backup" type="462c0819:PsiDirectoryNode" />
+              <item name="feed_data" type="462c0819:PsiDirectoryNode" />
+              <item name="x_feature_test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VoiceModel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
+              <item name="data_backup" type="462c0819:PsiDirectoryNode" />
+              <item name="feed_data" type="462c0819:PsiDirectoryNode" />
+              <item name="x_feature_train" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VoiceModel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
+              <item name="data_backup" type="462c0819:PsiDirectoryNode" />
+              <item name="feed_data" type="462c0819:PsiDirectoryNode" />
+              <item name="x_market_train" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VoiceModel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VoiceModel" type="462c0819:PsiDirectoryNode" />
+              <item name="data_backup" type="462c0819:PsiDirectoryNode" />
+              <item name="feed_data" type="462c0819:PsiDirectoryNode" />
+              <item name="y_train" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -247,6 +272,9 @@
       <module name="VoiceModel" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -353,7 +381,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80870000" />
+    <option name="totallyTimeSpent" value="81076000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -366,9 +394,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23260073" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23260073" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -381,8 +408,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4993895" weight="0.32959184" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50671554" side_tool="true" visible="true" weight="0.45306122" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4932845" visible="true" weight="0.45306122" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.507326" side_tool="true" visible="true" weight="0.45306122" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.492674" visible="true" weight="0.45306122" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.6495727" weight="0.3642857" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -638,14 +665,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="93" column="19" selection-start-line="93" selection-start-column="19" selection-end-line="93" selection-end-column="19" />
+        <state relative-caret-position="72">
+          <caret line="101" column="17" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/han_training_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2733">
+        <state relative-caret-position="-177">
+          <caret line="187" column="45" selection-start-line="187" selection-start-column="45" selection-end-line="187" selection-end-column="45" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
