@@ -199,7 +199,7 @@ if __name__ == "__main__":
     for epoch in range(epochs):
         index = np.random.randint(com_num)
         duo = duo_list[index]
-        print('fitting on firm nb {} out of 494 epoch {}'.format(k,epoch))
+        print('fitting on firm nb {} out of 494 epoch {}'.format(index,epoch))
         training(duo[0],duo[1],model)
         epoch += 1
 
