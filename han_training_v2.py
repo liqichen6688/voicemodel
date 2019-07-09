@@ -143,7 +143,7 @@ def training(x_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_name)
-    for i in range(10):
+    for i in range(1):
         train = model.train_on_batch(x_train, y_train_end)
         print(model.metrics_names[0] , ':' , train[0])
         print(model.metrics_names[1] , ':' , train[1])
@@ -169,15 +169,16 @@ def testing(x_test_folder, y_test_folder ,model):
         num_sample += x_test.shape[0]
         y_test_list = []
         for trend in y_test:
-            new_value = trend + 1
+            new_value = int(trend + 1)
             code = [0 for _ in range(3)]
             code[new_value] = 1
             y_test_list.append(code)
         y_test_end = np.asarray(y_test_list)
         print('-------test--------')
-        test = model.test_on_batch(x_test, y_test_end)
-        print(model.metrics_names[0], ':', test[0])
-        print(model.metrics_names[1], ':', test[1])
+        if len(y_test_list) > 0:
+            test = model.test_on_batch(x_test, y_test_end)
+            print(model.metrics_names[0], ':', test[0])
+            print(model.metrics_names[1], ':', test[1])
         num_right_sample += test[1] * x_test.shape[0]
 
     print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
@@ -185,14 +186,14 @@ def testing(x_test_folder, y_test_folder ,model):
 
 if __name__ == "__main__":
     model = han()
-    optimizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    optimizer = keras.optimizers.Adam(lr=0.01, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_train_folder='data_backup/feed_data/x_feature_train'
     y_train_folder='data_backup/feed_data/y_train'
     x_test_folder = 'data_backup/feed_data/x_feature_test'
     y_test_folder = 'data_backup/feed_data/y_test'
-    epochs=200
+    epochs=700
 	
     duo_list= twin_creation(x_train_folder, y_train_folder)
     com_num = len(duo_list)
