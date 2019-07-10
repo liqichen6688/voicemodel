@@ -9,11 +9,13 @@ import numpy as np
 import librosa
 import os
 
+scales = [1,5,20]
 LEN_DATA = 240
 NUM_FEATURE = 20
-NUM_PERIOD = 3
+NUM_PERIOD = len(scales)
 NUM_DAYS = 20
-MAX_PERIOD = 20
+MAX_PERIOD = max(scales)
+
 data_path = 'data_backup/1minbar_new'
 frame_length = 40
 store_path = 'data_backup/feed_data'
@@ -82,7 +84,6 @@ def get_company_features(df, scales = [1], m = "f"):
 def main():
 #if True:
     file_list, company_name = get_company_name()
-    scales = [1,5,20]
     company_name = list(company_name)
     company_name.sort()
     for company in company_name:
