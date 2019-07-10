@@ -44,8 +44,8 @@ def han(features = 60):
     post_gru = TimeDistributed(pre_model2)(l_gru)
 
 # MLP to perform classification
-    dense1 = Dense(400, activation='relu')(post_gru)
-    dense2 = Dense(400, activation='relu')(dense1)
+    dense1 = Dense(200, activation='relu')(post_gru)
+    dense2 = Dense(200, activation='relu')(dense1)
     dense3 = Dense(3, activation='tanh')(dense2)
     final = Activation('softmax')(dense3)
     final_model = Model(input2, final)
@@ -146,12 +146,15 @@ def training(x_name,y_name,model):
     #encoder = LabelEncoder()
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
-    print("model fitting on " + x_name)
-    for i in range(30):
+    loss = 0
+    accu = 0
+    loop = 2
+    #print("model fiting on " + x_name)
+    for i in range(loop):
         train = model.train_on_batch(x_train[selected], y_train_end[selected])
-        print(model.metrics_names[0] , ':' , train[0])
-        print(model.metrics_names[1] , ':' , train[1])
-
+        loss += train[0]
+        accu += train[1]
+    return loss/loop, accu/loop
 
 
 def testing(x_test_folder, y_test_folder ,model):
@@ -183,22 +186,22 @@ def testing(x_test_folder, y_test_folder ,model):
             y_test_list.append(code)
         y_test_end = np.asarray(y_test_list)
         if len(y_test_list) > 0:
-            print('-----test------'+duo[0])
+            #print('-----test------'+duo[0])
             test = model.test_on_batch(x_test, y_test_end)
-            print(model.metrics_names[0], ':', test[0])
-            print(model.metrics_names[1], ':', test[1])
+            #print(model.metrics_names[0], ':', test[0])
+            #print(model.metrics_names[1], ':', test[1])
             predict_result = model.predict_on_batch(x_test)
             new_prediction = np.argmax(predict_result,axis=1)
             up_pos = predict_result[:,2]
-            print(predict_result)
+            #print(predict_result)
             len_predict = new_prediction.shape[0]
             returns = np.append(returns, y_return[-len_predict:])
             prediction = np.append(prediction, new_prediction)
             num_right_sample += test[1] * x_test.shape[0]
-            print(new_prediction)
-            print(prediction, returns)
+            #print(new_prediction)
+            #print(prediction, returns)
             correlation = stats.pearsonr(new_prediction, y_return[-len_predict:])
-            print('sample corrilation',correlation)           
+            #print('sample corrilation',correlation)           
 
     print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
     correlation = stats.pearsonr(prediction, returns)
@@ -207,23 +210,31 @@ def testing(x_test_folder, y_test_folder ,model):
 
 if __name__ == "__main__":
     model = han()
-    optimizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    optimizer = keras.optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_train_folder='data_backup/feed_data/x_feature_train'
     y_train_folder='data_backup/feed_data/y_train'
     x_test_folder = 'data_backup/feed_data/x_feature_test'
     y_test_folder = 'data_backup/feed_data/y_test'
-    epochs = 200
+    epochs = 60000
 	
     duo_list= twin_creation(x_train_folder, y_train_folder)
     com_num = len(duo_list)
+    loss = 0
+    accuracy = 0
     for epoch in range(epochs):
         index = np.random.randint(com_num)
         duo = duo_list[index]
-        print('fitting on firm nb {} out of 494 epoch {}'.format(index,epoch))
-        training(duo[0],duo[1],model)
+        #print('fitting on firm nb {} out of 494 epoch {}'.format(index,epoch))
+        iloss, iaccuracy = training(duo[0],duo[1],model)
+        loss += iloss
+        accuracy += iaccuracy
         epoch += 1
+        if epoch%500 == 0:
+            testing(x_test_folder, y_test_folder, model)
+            print(loss/500, accuracy/500)
+            loss, accuracy = 0, 0
 
     testing(x_test_folder, y_test_folder, model)
 
