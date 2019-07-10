@@ -2,6 +2,7 @@ from keras.models import Model
 from keras.layers import Dense, Input, Activation, multiply, Lambda
 from keras.layers import TimeDistributed, GRU, Bidirectional
 from keras import backend as K
+import scipy.stats as stats
 import keras
 import os
 import numpy as np
@@ -143,7 +144,7 @@ def training(x_name,y_name,model):
     #encoder.fit(y_train)
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_name)
-    for i in range(1):
+    for i in range(30):
         train = model.train_on_batch(x_train, y_train_end)
         print(model.metrics_names[0] , ':' , train[0])
         print(model.metrics_names[1] , ':' , train[1])
@@ -163,9 +164,13 @@ def testing(x_test_folder, y_test_folder ,model):
 
     num_sample = 0
     num_right_sample = 0
+    prediction = np.array([])
+    returns = np.array([])
+ 
     for duo in duo_test_list:
         x_test = np.load('data_backup/feed_data/x_feature_test/'+duo[0])
         y_test = np.load('data_backup/feed_data/y_test/'+duo[1])
+        y_return = np.load('data_backup/feed_data/y_pretrain/'+duo[1][:-8]+'train.npy')
         num_sample += x_test.shape[0]
         y_test_list = []
         for trend in y_test:
@@ -174,26 +179,41 @@ def testing(x_test_folder, y_test_folder ,model):
             code[new_value] = 1
             y_test_list.append(code)
         y_test_end = np.asarray(y_test_list)
-        print('-------test--------')
         if len(y_test_list) > 0:
+            print('-----test------'+duo[0])
             test = model.test_on_batch(x_test, y_test_end)
             print(model.metrics_names[0], ':', test[0])
             print(model.metrics_names[1], ':', test[1])
-        num_right_sample += test[1] * x_test.shape[0]
+            predict_result = model.predict_on_batch(x_test)
+            new_prediction = np.argmax(predict_result,axis=1)
+            up_pos = predict_result[:,2]
+            print(predict_result)
+            len_predict = new_prediction.shape[0]
+            returns = np.append(returns, y_return[-len_predict:])
+            prediction = np.append(prediction, new_prediction)
+            num_right_sample += test[1] * x_test.shape[0]
+            print(new_prediction)
+            print(prediction, returns)
+            correlation = stats.pearsonr(new_prediction, y_return[-len_predict:])
+            print('sample corrilation',correlation)           
+    
 
-    print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
+
+            print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
+            correlation = stats.pearsonr(prediction, returns)
+            print('total corr',correlation)
 
 
 if __name__ == "__main__":
     model = han()
-    optimizer = keras.optimizers.Adam(lr=0.01, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    optimizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_train_folder='data_backup/feed_data/x_feature_train'
     y_train_folder='data_backup/feed_data/y_train'
     x_test_folder = 'data_backup/feed_data/x_feature_test'
     y_test_folder = 'data_backup/feed_data/y_test'
-    epochs=700
+    epochs = 200
 	
     duo_list= twin_creation(x_train_folder, y_train_folder)
     com_num = len(duo_list)
