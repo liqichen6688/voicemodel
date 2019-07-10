@@ -138,6 +138,9 @@ def training(x_name,y_name,model):
 
         
     y_train_end=np.asarray(y_oh_list)
+    data_length = len(y_oh_list)
+    batch_size = min(50, data_length)
+    selected = np.random.randint(0, data_length, batch_size)
 
     # Encoding y
     #encoder = LabelEncoder()
@@ -145,7 +148,7 @@ def training(x_name,y_name,model):
     #encoded_Y = encoder.transform(y_train)
     print("model fitting on " + x_name)
     for i in range(30):
-        train = model.train_on_batch(x_train, y_train_end)
+        train = model.train_on_batch(x_train[selected], y_train_end[selected])
         print(model.metrics_names[0] , ':' , train[0])
         print(model.metrics_names[1] , ':' , train[1])
 
@@ -196,12 +199,10 @@ def testing(x_test_folder, y_test_folder ,model):
             print(prediction, returns)
             correlation = stats.pearsonr(new_prediction, y_return[-len_predict:])
             print('sample corrilation',correlation)           
-    
 
-
-            print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
-            correlation = stats.pearsonr(prediction, returns)
-            print('total corr',correlation)
+    print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
+    correlation = stats.pearsonr(prediction, returns)
+    print('total corr',correlation)
 
 
 if __name__ == "__main__":
