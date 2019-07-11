@@ -219,8 +219,8 @@ def process_label():
             else:
                 label = np.append(label, 0)
         print(label)
-        np.save(store_path + '/' + 'y_train' + '/' + company +'_y_train', label[: int(0.8*len(prelabel))])
-        np.save(store_path + '/' + 'y_test' + '/' + company +"_y_test", label[int(0.8*len(prelabel)):])
+        np.save(store_path + '/' + 'y_train' + '/' + company +'_y_train', label[NORM_WINDOW-1: int(0.8*(len(prelabel)-NORM_WINDOW+1))])
+        np.save(store_path + '/' + 'y_test' + '/' + company +"_y_test", label[int(0.8*(len(prelabel)-NORM_WINDOW+1)):])
 #        except:
 #            continue
 
