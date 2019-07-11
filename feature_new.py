@@ -177,6 +177,8 @@ def main():
             else:
                 fe = np.append(fe, np.array([r[:,i:i+NUM_DAYS,:]]), axis = 0)
         fe = fe.transpose((0,2,1,3))
+        feb = np.random.rand(fe.shape[0], fe.shape[1], fe.shape[2], fe.shape[3])
+        fe[np.isnan(fe)] = feb[np.isnan(fe)]
         np.save(store_path + '/' + 'x_feature_train' + '/' + company +'_feature_train', fe[: int(0.8*num_days)])
         np.save(store_path + '/' + 'x_feature_test' + '/' + company + '_feature_test', fe[int(0.8 * num_days):])
 #        print("LABEL")
@@ -219,8 +221,8 @@ def process_label():
             else:
                 label = np.append(label, 0)
         print(label)
-        np.save(store_path + '/' + 'y_train' + '/' + company +'_y_train', label[NORM_WINDOW-1: int(0.8*(len(prelabel)-NORM_WINDOW+1))])
-        np.save(store_path + '/' + 'y_test' + '/' + company +"_y_test", label[int(0.8*(len(prelabel)-NORM_WINDOW+1)):])
+        np.save(store_path + '/' + 'y_train' + '/' + company +'_y_train', label[: int(0.8*len(prelabel))])
+        np.save(store_path + '/' + 'y_test' + '/' + company +"_y_test", label[int(0.8*len(prelabel)):])
 #        except:
 #            continue
 
@@ -258,6 +260,7 @@ def get_company_markets(company, file_list):
         t_volume = np.array(reader["AccuBargainAmount"])[-1]
         t_amount = np.array(reader["AccuBargainSum"])[-1]
         t_turnover = np.array(reader["AccuTurnoverDeals"])[-1]
+        print(t_turnover)
         if t_volume > 0:
             t_vwap = t_amount / t_volume
         else:

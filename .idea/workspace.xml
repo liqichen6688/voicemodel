@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e73e0fca-09c3-45ec-b038-286e687742d7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e73e0fca-09c3-45ec-b038-286e687742d7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/feature_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="950">
-              <caret line="296" column="37" selection-start-line="296" selection-start-column="37" selection-end-line="296" selection-end-column="37" />
+            <state relative-caret-position="-1910">
+              <caret line="222" column="116" selection-start-line="222" selection-start-column="116" selection-end-line="222" selection-end-column="116" />
             </state>
           </provider>
         </entry>
@@ -364,7 +362,7 @@
       <workItem from="1562036400053" duration="2664000" />
       <workItem from="1562553911645" duration="2032000" />
       <workItem from="1562725020694" duration="836000" />
-      <workItem from="1562725863018" duration="12781000" />
+      <workItem from="1562725863018" duration="13151000" />
     </task>
     <task id="LOCAL-00001" summary="'more features'">
       <created>1561970227969</created>
@@ -384,7 +382,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94693000" />
+    <option name="totallyTimeSpent" value="95063000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -397,7 +395,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15628816" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -681,8 +678,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="296" column="37" selection-start-line="296" selection-start-column="37" selection-end-line="296" selection-end-column="37" />
+        <state relative-caret-position="-1910">
+          <caret line="222" column="116" selection-start-line="222" selection-start-column="116" selection-end-line="222" selection-end-column="116" />
         </state>
       </provider>
     </entry>
