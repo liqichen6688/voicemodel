@@ -18,8 +18,8 @@ NUM_PERIOD = len(scales)
 NUM_DAYS = 20
 MAX_PERIOD = max(scales)
 NORM_WINDOW = 25
-#data_path = 'data_backup/1minbar_new'
-data_path = 'data_backup/1minbar'
+data_path = 'data_backup/1minbar_new'
+#data_path = 'data_backup/1minbar'
 
 frame_length = 40
 store_path = 'data_backup/feed_data'
