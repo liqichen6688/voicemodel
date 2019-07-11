@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 import librosa
 import os
+import glob
+import time
 
 scales = [1, 5]
 #LEN_DATA = 240
@@ -29,8 +31,8 @@ LABEL_CLOSE = "ClosePrice"
 LABEL_VOLUME = "BargainAmount"
 
 
-ALPHA_LIST = ["MACD", "DIF"]
-alpha_path = 'data_backup/alpha'
+alpha_path = 'data_backup/alpha/'
+ALPHA_LIST = [glob.glob(alpha_path + "/*.csv")[_][len(store_path)-3:-4] for _ in range(len(glob.glob(alpha_path + "/*.csv")))]
 def get_features(series):
     '''
     return wave-related features
@@ -58,7 +60,6 @@ def get_company_features(df, len_ts, m = "f"):
     '''
     return all scales of wave-related features
     '''
-#    try:
     if True:
         init = True
         if m == "f":
@@ -69,14 +70,6 @@ def get_company_features(df, len_ts, m = "f"):
                 print(feature.shape)
                 print(len(len_ts))
                 assert feature.shape[1] == len(len_ts) - 1
-#
-#
-#
-#
-#                dlen = LEN_DATA * i
-#                for j in range(int(len(df) / LEN_DATA) - i + 1):
-#                    feature = np.append(feature,  np.array([get_features(df[j * LEN_DATA: j * LEN_DATA +dlen]).T[0]]).T, axis = 1)
-#
                 if init:
                     features = feature.T
                     init = False
@@ -100,20 +93,18 @@ def get_company_features(df, len_ts, m = "f"):
                     features = np.append(features,  df[len_ts[j+1] -1] / df[len_ts[j]] - 1)
                 assert len(features) == len(len_ts) - 1
         return features
-#    except:
-#        return []
+
 
 
 
 def main():
-#if True:
     file_list, company_name = get_company_name()
     company_name = list(company_name)
     company_name.sort()
-#    for alpha in ALPHA_LIST:
-##        assert os.path.exist(alpha_path + alpha + '.csv')
-#        exec(alpha + "_ts = pd.read_csv(alpha_path + alpha + .csv")
-#        print("Alpha: " + alpha + " is loaded!")
+    for alpha in ALPHA_LIST: # Load Alphas once
+        assert os.path.exists(alpha_path + "/" + alpha + '.csv')
+        exec(alpha + "_ts = pd.read_csv(alpha_path + '/' + alpha + '.csv')")
+        print("Alpha: " + alpha + " is loaded!")
     for company in company_name:
         if int(company) < BEGIN_ID:
             continue
@@ -143,18 +134,18 @@ def main():
         print(len(timeline))
         '''
         '''
-#        var_col = []
-#        for alpha in ALPHA_LIST:
-#            exec(alpha + '_feature = np.array(get_alphas(timeline, ' + alpha + '_ts[str(int(company))]))[1:], ' + alpha + '_ts[\"date\"][1:]')
-#            exec("var_col.append(" + alpha + "_feature)")
-#        init = True
-#        for alp in var_col:
-#            if init:
-#                alpfeature = np.array([alp])
-#                init = False
-#            else:
-#                alpfeature = np.append(alpfeature, [alp])
-#        print(alpfeature.shape)
+        init = True
+        for alpha in ALPHA_LIST:
+            exec(alpha + '_feature = get_alphas(np.array([int(time.mktime(time.strptime(_, "%Y-%m-%d"))) for _ in timeline]), np.array(' + alpha + '_ts[str(int(company))][1:]), np.array([int(time.mktime(time.strptime(_, "%Y-%m-%d"))) for _ in ' + alpha + '_ts[\"date\"][1:]]))')
+            if init:
+                exec("var_col = np.array([" + alpha + "_feature])")
+                init = False
+            else:
+                exec("var_col = np.append(var_col, [" + alpha + "_feature], axis = 0)")
+        print(var_col.shape)
+        var = alpha_scales(var_col)[:,:int(len(scales) * (NUM_FEATURE) - marfeature.shape[1])]
+        print(var.shape)
+        marfeature = np.append(marfeature, var, axis = 1)
         '''
         '''
         print("Label processing...")
@@ -259,26 +250,23 @@ def get_company_markets(company, file_list):
         t_low = np.array(reader["AccuLowPrice"])[-1]
         t_volume = np.array(reader["AccuBargainAmount"])[-1]
         t_amount = np.array(reader["AccuBargainSum"])[-1]
-        t_turnover = np.array(reader["AccuTurnoverDeals"])[-1]
-        print(t_turnover)
+#        t_turnover = np.array(reader["AccuTurnoverDeals"])[-1]
+#        print(t_turnover)
         if t_volume > 0:
             t_vwap = t_amount / t_volume
         else:
             t_vwap = 1 / 2 * (t_close + t_open)
         t_risk_close = np.std(reader["ClosePrice"])
-        t_risk_high = np.std(reader["HighPrice"])
-        t_risk_low = np.std(reader["LowPrice"])
-        t_risk_open = np.std(reader["OpenPrice"])
+#        t_risk_high = np.std(reader["HighPrice"])
+#        t_risk_low = np.std(reader["LowPrice"])
+#        t_risk_open = np.std(reader["OpenPrice"])
         t_risk_vol = np.std(reader["BargainAmount"])
         t_risk_amount = np.std(reader["BargainSum"])
-        t_risk_turnover = np.std(reader["TurnoverDeals"])
+#        t_risk_turnover = np.std(reader["TurnoverDeals"])
         t_date = reader["BargainDate"][0]
         if init:
             market_features = np.array([[ t_close, t_open, t_high,
-                                        t_low, t_volume, t_amount, t_turnover,
-                                        t_vwap, t_risk_close, t_risk_low, t_risk_high,
-                                        t_risk_open, t_risk_vol, t_risk_amount,
-                                        t_risk_turnover]]).T
+                                        t_low, t_volume, t_amount,  t_vwap, t_risk_close , t_risk_vol, t_risk_amount]]).T
             print(market_features.shape)
             timeline = [t_date]
             init = False
@@ -286,10 +274,7 @@ def get_company_markets(company, file_list):
 #            print("Before")
 #            print(market_features.shape)
             market_features = np.append(market_features, np.array([[t_close, t_open, t_high,
-                                        t_low, t_volume, t_amount, t_turnover,
-                                        t_vwap, t_risk_close, t_risk_low, t_risk_high,
-                                        t_risk_open, t_risk_vol, t_risk_amount,
-                                        t_risk_turnover]]).T, axis = 1)
+                                        t_low, t_volume, t_amount, t_vwap, t_risk_close,  t_risk_vol, t_risk_amount]]).T, axis = 1)
 #            print("After")
 #            print(market_features.shape)
             timeline.append(t_date)
@@ -299,9 +284,8 @@ def get_company_markets(company, file_list):
     print(returns)
     d_volume = np.array(df[4].diff())
     d_amount = np.array(df[5].diff())
-    d_turnover = np.array(df[6].diff())
-    d_vwap = np.array(df[7].diff())
-    d_features = np.array([returns,d_volume, d_amount, d_turnover, d_vwap]).T
+    d_vwap = np.array(df[6].diff())
+    d_features = np.array([returns,d_volume, d_amount, d_vwap]).T
     print(d_features.shape)
     print("Before1")
     print(market_features.shape)
@@ -322,16 +306,44 @@ def get_company_markets(company, file_list):
         print("After2")
 #    market_features = get_alphas(company, market_features, timeline, ALPHA_LIST)
     market_features = normalization(market_features.T)
-    print("market_features size: " + str(market_features.shape))
-    print(market_features[0,:])
-    print("++++++++++++++++++++++")
-    print(market_features[-1,:])
+#    print("market_features size: " + str(market_features.shape))
+#    print(market_features[0,:])
+#    print("++++++++++++++++++++++")
+#    print(market_features[-1,:])
     return market_features, timeline
 
-#def get_alphas(timeline, ts, time):
-#
-#    return alp_features
+def get_alphas(timeline, ts, times):
+    print(timeline)
+    print(ts)
+    print(times)
+    j = 0
+    lis = np.array([])
+    for i in timeline:
+        while times[j] < i:
+            j += 1
+        if times[j] == i:
+            lis = np.append(lis, ts[j])
+    assert len(lis) == len(timeline)
+#    alp_features = ts
+    return lis
 
+def alpha_scales(df):
+    dfc = df.copy()
+    for scale in scales:
+        if scale == 1:
+            continue
+        t_df = np.array(pd.DataFrame(dfc).T.rolling(scale).mean()).T
+#        print(t_df)
+        print(t_df.shape)
+        print("Before2")
+        print(df.shape)
+        df = np.append(df, t_df, axis = 0)
+        print(df.shape)
+        print("After2")
+#    market_features = get_alphas(company, market_features, timeline, ALPHA_LIST)
+    df = normalization(df.T)
+    return df
+    
 if __name__ == '__main__':
     main()
     process_label()
