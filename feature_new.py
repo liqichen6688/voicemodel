@@ -18,6 +18,7 @@ MAX_PERIOD = max(scales)
 NORM_WINDOW = 25
 
 data_path = 'data_backup/1minbar_new'
+#data_path = 'data_backup/1minbar'
 frame_length = 40
 store_path = 'data_backup/feed_data'
 BEGIN_ID = 0
@@ -48,7 +49,7 @@ def get_company_name():
     company_name -= set(['.DS'])
     return file_list, company_name
 
-def get_company_features(df, m = "f"):
+def get_company_features(df, len_ts, m = "f"):
     '''
     return all scales of wave-related features
     '''
@@ -57,9 +58,17 @@ def get_company_features(df, m = "f"):
         if m == "f":
             for i in scales:
                 feature = np.array([[np.nan]*(i-1)] * NUM_FEATURE)
-                dlen = LEN_DATA * i
-                for j in range(int(len(df) / LEN_DATA) - i + 1):
-                    feature = np.append(feature,  np.array([get_features(df[j * LEN_DATA: j * LEN_DATA +dlen]).T[0]]).T, axis = 1)
+                for j in range(len(len_ts) - i):
+                    feature = np.append(feature, get_features(df[len_ts[j]: len_ts[j+i] ]))
+                assert len(feature) == len(len_ts) - 1
+#
+#
+#
+#
+#                dlen = LEN_DATA * i
+#                for j in range(int(len(df) / LEN_DATA) - i + 1):
+#                    feature = np.append(feature,  np.array([get_features(df[j * LEN_DATA: j * LEN_DATA +dlen]).T[0]]).T, axis = 1)
+#
                 if init:
                     features = feature.T
                     init = False
@@ -73,10 +82,11 @@ def get_company_features(df, m = "f"):
             features = normalization(features)
         elif m == "l":
             for i in scales:
-                dlen = LEN_DATA * i
-                features = np.array([])
-                for j in range(int(len(df) / LEN_DATA) - i):
-                    features = np.append(features,  df[j * LEN_DATA +dlen] / df[j * LEN_DATA] - 1)
+#                dlen = LEN_DATA * i
+                features = np.array([np.nan])
+                for j in range(1, len(len_ts) - 1):
+                    features = np.append(features,  df[len_ts[j+1] -1] / df[len_ts[j]] - 1)
+                assert len(features) == len(len_ts) - 1
         return features
     except:
         return []
@@ -97,17 +107,19 @@ def main():
         init = True
         for item in company_file_list:
             reader = pd.read_csv(data_path+"/" + item)
-            if reader.shape[0] != LEN_DATA:
-                continue
+            #if reader.shape[0] != LEN_DATA:
+              #  continue
             if init:
                 company_ts = reader
+                len_ts = [0, reader.shape[0]]
                 init = False
             else:
                 company_ts = pd.concat([company_ts, reader], axis = 0, ignore_index = True)
-        clsfeature = get_company_features(company_ts[LABEL_CLOSE])
-        volfeature = get_company_features(company_ts[LABEL_VOLUME])
+                len_ts.append(company_ts.shape[0])
+        clsfeature = get_company_features(company_ts[LABEL_CLOSE], len_ts)
+        volfeature = get_company_features(company_ts[LABEL_VOLUME], len_ts)
         marfeature = get_company_markets(company, file_list)
-        label = get_company_features(company_ts[LABEL_CLOSE], m = "l")
+        label = get_company_features(company_ts[LABEL_CLOSE], len_ts, m = "l")
         if len(clsfeature) == 0 or len(volfeature) == 0 or len(label) == 0:
             continue
 #        clsfeature5 = get_company_features(company_ts["ClosePrice"], [5])
