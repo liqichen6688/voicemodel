@@ -18,8 +18,8 @@ NUM_PERIOD = len(scales)
 NUM_DAYS = 20
 MAX_PERIOD = max(scales)
 NORM_WINDOW = 25
-#data_path = 'data_backup/1minbar_new'
-data_path = 'data_backup/1minbar'
+data_path = 'data_backup/1minbar_new'
+#data_path = 'data_backup/1minbar'
 
 frame_length = 40
 store_path = 'data_backup/feed_data'
@@ -323,6 +323,8 @@ def get_alphas(timeline, ts, times):
             j += 1
         if times[j] == i:
             lis = np.append(lis, ts[j])
+        elif times[j] > i:
+            lis = np.append(lis, ts[j-1])
     assert len(lis) == len(timeline)
 #    alp_features = ts
     return lis
