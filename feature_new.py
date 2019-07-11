@@ -18,8 +18,8 @@ NUM_PERIOD = len(scales)
 NUM_DAYS = 20
 MAX_PERIOD = max(scales)
 NORM_WINDOW = 25
-data_path = 'data_backup/1minbar_new'
-#data_path = 'data_backup/1minbar'
+#data_path = 'data_backup/1minbar_new'
+data_path = 'data_backup/1minbar'
 
 frame_length = 40
 store_path = 'data_backup/feed_data'
@@ -101,9 +101,14 @@ def main():
     file_list, company_name = get_company_name()
     company_name = list(company_name)
     company_name.sort()
+    init = True
     for alpha in ALPHA_LIST: # Load Alphas once
         assert os.path.exists(alpha_path + "/" + alpha + '.csv')
-        exec(alpha + "_ts = pd.read_csv(alpha_path + '/' + alpha + '.csv')")
+        if init:
+            alpha_list = [pd.read_csv(alpha_path + '/' + alpha + '.csv')]
+            init = False
+        else:
+            alpha_list.append(pd.read_csv(alpha_path + '/' + alpha + '.csv'))
         print("Alpha: " + alpha + " is loaded!")
     for company in company_name:
         if int(company) < BEGIN_ID:
@@ -135,13 +140,13 @@ def main():
         '''
         '''
         init = True
-        for alpha in ALPHA_LIST:
-            exec(alpha + '_feature = get_alphas(np.array([int(time.mktime(time.strptime(_, "%Y-%m-%d"))) for _ in timeline]), np.array(' + alpha + '_ts[str(int(company))][1:]), np.array([int(time.mktime(time.strptime(_, "%Y-%m-%d"))) for _ in ' + alpha + '_ts[\"date\"][1:]]))')
+        for alpha in range(len(ALPHA_LIST)):
+            feature_temp = get_alphas(np.array([int(time.mktime(time.strptime(_, "%Y-%m-%d"))) for _ in timeline]), np.array(alpha_list[alpha][str(int(company))][1:]), np.array([int(time.mktime(time.strptime(_, "%Y-%m-%d"))) for _ in alpha_list[alpha]["date"][1:]]))
             if init:
-                exec("var_col = np.array([" + alpha + "_feature])")
+                var_col = np.array([feature_temp])
                 init = False
             else:
-                exec("var_col = np.append(var_col, [" + alpha + "_feature], axis = 0)")
+                var_col = np.append(var_col, [feature_temp], axis = 0)
         print(var_col.shape)
         var = alpha_scales(var_col)[:,:int(len(scales) * (NUM_FEATURE) - marfeature.shape[1])]
         print(var.shape)
