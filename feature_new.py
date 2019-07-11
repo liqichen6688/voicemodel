@@ -179,6 +179,8 @@ def main():
         fe = fe.transpose((0,2,1,3))
         np.save(store_path + '/' + 'x_feature_train' + '/' + company +'_feature_train', fe[: int(0.8*num_days)])
         np.save(store_path + '/' + 'x_feature_test' + '/' + company + '_feature_test', fe[int(0.8 * num_days):])
+#        print("LABEL")
+#        print(label)
         np.save(store_path + '/' + 'y_pretrain' + '/' + company +'_y_train', label)
 
 
@@ -186,29 +188,41 @@ def main():
 def process_label():
     file_list, company_name = get_company_name()
     labels = np.array([])
+    company_name = list(company_name)
+    company_name.sort()
+    print(company_name)
     for company in company_name:
         try:
             prelabel = np.load(store_path + '/' + 'y_pretrain' + '/' + company +'_y_train.npy')
             labels = np.append(labels, prelabel)
         except:
             continue
+    for la in range(len(labels)):
+        if str(labels[la]) == 'nan':
+            labels[la] = 0
     low_thres = np.percentile(labels, 33.33)
+    print("Low_thres: " + str(low_thres))
     high_thres = np.percentile(labels, 66.66)
     for company in company_name:
         try:
             prelabel = np.load(store_path + '/' + 'y_pretrain' + '/' + company +'_y_train.npy')
-            label = np.array([])
-            for k in range(MAX_PERIOD + NUM_DAYS + 1, len(prelabel)):
-                if prelabel[k] < low_thres:
-                    label = np.append(label, -1)
-                elif prelabel[k] > high_thres:
-                    label = np.append(label, 1)
-                else:
-                    label = np.append(label, 0)
-            np.save(store_path + '/' + 'y_train' + '/' + company +'_y_train', label[: int(0.8*len(prelabel))])
-            np.save(store_path + '/' + 'y_test' + '/' + company +"_y_test", label[int(0.8*len(prelabel)):])
         except:
             continue
+#        print("Prelabel")
+#        print(prelabel)
+        label = np.array([])
+        for k in range(MAX_PERIOD + NUM_DAYS + 1, len(prelabel)):
+            if prelabel[k] < low_thres:
+                label = np.append(label, -1)
+            elif prelabel[k] > high_thres:
+                label = np.append(label, 1)
+            else:
+                label = np.append(label, 0)
+        print(label)
+        np.save(store_path + '/' + 'y_train' + '/' + company +'_y_train', label[: int(0.8*len(prelabel))])
+        np.save(store_path + '/' + 'y_test' + '/' + company +"_y_test", label[int(0.8*len(prelabel)):])
+#        except:
+#            continue
 
 def normalization(feature: np.ndarray, window=NORM_WINDOW) -> np.ndarray:
     num_clomn = feature.shape[1]
