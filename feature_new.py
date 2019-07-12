@@ -18,8 +18,8 @@ NUM_PERIOD = len(scales)
 NUM_DAYS = 20
 MAX_PERIOD = max(scales)
 NORM_WINDOW = 25
-data_path = 'data_backup/1minbar_new'
-#data_path = 'data_backup/1minbar'
+#data_path = 'data_backup/1minbar_new'
+data_path = 'data_backup/1minbar_small'
 
 frame_length = 40
 store_path = 'data_backup/feed_data'
@@ -154,7 +154,7 @@ def main():
         '''
         '''
         print("Label processing...")
-        label = get_company_features(company_ts[LABEL_CLOSE], len_ts, m = "l")
+        label = get_company_features(company_ts[LABEL_CLOSE], len_ts, m = "l")[NORM_WINDOW - 1:]
 #        if len(clsfeature) == 0 or len(volfeature) == 0 or len(label) == 0:
 #            continue
 #        clsfeature5 = get_company_features(company_ts["ClosePrice"], [5])
