@@ -15,7 +15,7 @@ def han(features = 60):
     # refer to 4.2 in the paper whil reading the following code
 
     # Input for one day : max article per day =40, dim_vec=200
-    input1 = Input(shape=(2, features), dtype='float32')
+    input1 = Input(shape=(3, features), dtype='float32')
 
     # Attention Layer
     dense_layer = Dense(features, activation='relu')(input1)
@@ -30,7 +30,7 @@ def han(features = 60):
 
     # Input of the HAN shape (None,11,40,200)
     # 11 = Window size = N in the paper 40 = max articles per day, dim_vec = 200
-    input2 = Input(shape=(20, 2, features), dtype='float32')
+    input2 = Input(shape=(20, 3, features), dtype='float32')
 
     # TimeDistributed is used to apply a layer to every temporal slice of an input
     # So we use it here to apply our attention layer ( pre_model ) to every article in one day
@@ -44,9 +44,9 @@ def han(features = 60):
     post_gru = TimeDistributed(pre_model2)(l_gru)
 
 # MLP to perform classification
-    dense1 = Dense(200, activation='relu')(post_gru)
-    dense2 = Dense(200, activation='relu')(dense1)
-    dense3 = Dense(3, activation='tanh')(dense2)
+    dense1 = Dense(600, activation='relu')(post_gru)
+    dense2 = Dense(600, activation='relu')(dense1)
+    dense3 = Dense(3, activation='relu')(dense2)
     final = Activation('softmax')(dense3)
     final_model = Model(input2, final)
     final_model.summary()
@@ -148,12 +148,14 @@ def training(x_name,y_name,model):
     #encoded_Y = encoder.transform(y_train)
     loss = 0
     accu = 0
-    loop = 2
+    loop = 1
     #print("model fiting on " + x_name)
+    print('-------'+x_name+'-----------')
     for i in range(loop):
         train = model.train_on_batch(x_train[selected], y_train_end[selected])
         loss += train[0]
         accu += train[1]
+        print(train[0],train[1])
     return loss/loop, accu/loop
 
 
@@ -206,23 +208,27 @@ def testing(x_test_folder, y_test_folder ,model):
     print('total performance{}/{} = {}'.format(int(num_right_sample), num_sample, num_right_sample/num_sample))
     correlation = stats.pearsonr(prediction, returns)
     print('total corr',correlation)
-
+    return num_right_sample/num_sample
 
 if __name__ == "__main__":
     model = han()
-    optimizer = keras.optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    lr = 0.0001
+    optimizer = keras.optimizers.Adam(lr=lr, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
     # Put your training data folder path
     x_train_folder='data_backup/feed_data/x_feature_train'
     y_train_folder='data_backup/feed_data/y_train'
     x_test_folder = 'data_backup/feed_data/x_feature_test'
     y_test_folder = 'data_backup/feed_data/y_test'
-    epochs = 60000
+    epochs = 300000
 	
     duo_list= twin_creation(x_train_folder, y_train_folder)
     com_num = len(duo_list)
     loss = 0
     accuracy = 0
+    training_his_loss = []
+    training_his_accu = []
+    test_accu_his = []
     for epoch in range(epochs):
         index = np.random.randint(com_num)
         duo = duo_list[index]
@@ -231,12 +237,21 @@ if __name__ == "__main__":
         loss += iloss
         accuracy += iaccuracy
         epoch += 1
-        if epoch%500 == 0:
-            testing(x_test_folder, y_test_folder, model)
-            print(loss/500, accuracy/500)
+        if epoch%50 == 0:
+            test_accu = testing(x_test_folder, y_test_folder, model)
+            print('total:',loss/50, accuracy/50)
+            training_his_loss.append(loss/50)
+            test_accu_his.append(test_accu)
+            training_his_accu.append(accuracy/50)
             loss, accuracy = 0, 0
 
     testing(x_test_folder, y_test_folder, model)
+    loss = np.array(training_his_loss)
+    accu = np.array(training_his_accu)
+    test = np.array(test_accu_his)
+    np.save('history/loss'+str(lr),loss)
+    np.save('history/accu'+str(lr),accu)
+    np.save('history/test'+str(lr),test)
 
     model.save('your_model_{}epochs.hdf5'.format(epochs))
     

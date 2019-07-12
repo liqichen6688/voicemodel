@@ -11,15 +11,15 @@ import os
 import glob
 import time
 
-scales = [1, 5]
+scales = [1, 5, 20]
 #LEN_DATA = 240
 NUM_FEATURE = 20
 NUM_PERIOD = len(scales)
 NUM_DAYS = 20
 MAX_PERIOD = max(scales)
 NORM_WINDOW = 25
-#data_path = 'data_backup/1minbar_new'
-data_path = 'data_backup/1minbar_small'
+data_path = 'data_backup/1minbar_new'
+#data_path = 'data_backup/1minbar_small'
 
 frame_length = 40
 store_path = 'data_backup/feed_data'
