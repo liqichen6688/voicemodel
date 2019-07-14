@@ -22,7 +22,7 @@ data_path = 'data_backup/1minbar_new'
 #data_path = 'data_backup/1minbar'
 
 frame_length = 40
-store_path = 'data_backup/feed_data/0712'
+store_path = 'data_backup/feed_data/0714'
 BEGIN_ID = 0
 #LABEL_CLOSE = "0"
 #LABEL_VOLUME = "1"
@@ -207,6 +207,7 @@ def process_label():
     low_thres = np.percentile(labels, 33.33)
     print("Low_thres: " + str(low_thres))
     high_thres = np.percentile(labels, 66.66)
+    print(str(high_thres))
     for company in company_name:
         try:
             prelabel = np.load(store_path + '/' + 'y_pretrain' + '/' + company +'_y_train.npy')
@@ -251,7 +252,7 @@ def normalization(feature, window=NORM_WINDOW):
     num_col = feature.shape[1]
     num_row = feature.shape[0]
     for i in range(num_col):
-        feature[:,i] = feature[:,i] - feature[int(0.8*num_row),i]
+        feature[:,i] = feature[:,i] / feature[int(0.8*num_row),i]
     return feature
 
 def get_company_markets(company, file_list):
